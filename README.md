@@ -14,3 +14,24 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Code Formatting with Prettier
+
+This project uses [Prettier](https://prettier.io/) for consistent code formatting. The configuration includes:
+
+- Automatic code formatting on file save
+- Integration with ESLint
+- Project-specific formatting rules in `.prettierrc.json`
+
+### VS Code Setup
+
+1. Install the recommended extensions:
+   - Prettier - Code formatter (`esbenp.prettier-vscode`)
+   - ESLint (`dbaeumer.vscode-eslint`)
+
+2. VS Code settings are already configured in `.vscode/settings.json` to format on save
+
+### Available Scripts
+
+- `npm run format` - Format all source files
+- `npm run format:check` - Check if files are correctly formatted
