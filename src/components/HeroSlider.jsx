@@ -1,0 +1,186 @@
+import { useState, useEffect } from 'react'
+
+const HeroSlider = ({ slides }) => {
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [autoplay, setAutoplay] = useState(true)
+
+  useEffect(() => {
+    let interval
+    if (autoplay) {
+      interval = setInterval(() => {
+        setCurrentSlide(prev => (prev === slides.length - 1 ? 0 : prev + 1))
+      }, 5000)
+    }
+    return () => clearInterval(interval)
+  }, [slides.length, autoplay])
+
+  const goToSlide = index => {
+    setCurrentSlide(index)
+    setAutoplay(false)
+    setTimeout(() => setAutoplay(true), 5000)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide(prev => (prev === 0 ? slides.length - 1 : prev - 1))
+    setAutoplay(false)
+    setTimeout(() => setAutoplay(true), 5000)
+  }
+
+  const nextSlide = () => {
+    setCurrentSlide(prev => (prev === slides.length - 1 ? 0 : prev + 1))
+    setAutoplay(false)
+    setTimeout(() => setAutoplay(true), 5000)
+  }
+
+  const defaultSlide = {
+    image: 'https://placeholder.com/600x400',
+    title: 'VERSTÄRKER',
+    subtitle: 'APOLO',
+    description: 'Diseño que impone. Calidad que perdura.',
+    flag: '🇪🇸',
+    flagText: 'Ingeniería Alemana',
+    buttonText: 'Explorar Productos',
+    buttonLink: '/productos',
+  }
+
+  const slideData = slides?.length ? slides : [defaultSlide]
+
+  return (
+    // Usamos calc para ajustar la altura exactamente al viewport menos la altura del navbar (64px = 4rem)
+    <div
+      className="relative w-full overflow-hidden bg-black"
+      style={{ height: 'calc(100vh - 64px)' }}
+    >
+      <div className="w-full h-full">
+        {slideData.map((slide, index) => (
+          <div
+            key={index}
+            className={`w-full h-full transition-opacity duration-700 ${
+              index === currentSlide ? 'opacity-100 block' : 'opacity-0 hidden'
+            }`}
+          >
+            {/* Vista móvil: diseño en columna con imagen arriba */}
+            <div className="md:hidden flex flex-col h-full w-full">
+              {/* Imagen arriba en móvil - 50% de altura */}
+              <div className="w-full h-1/2">
+                <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
+              </div>
+
+              {/* Contenido debajo de la imagen - 50% de altura */}
+              <div className="bg-black w-full h-1/2 px-6 flex flex-col justify-center">
+                <h1 className="text-3xl font-bold text-white">{slide.title}</h1>
+                <h2 className="text-2xl font-bold text-amber-400 mt-1">{slide.subtitle}</h2>
+                <p className="text-sm mt-2 text-white/90">{slide.description}</p>
+
+                <div className="flex items-center mt-2">
+                  <span className="text-lg mr-2">{slide.flag}</span>
+                  <span className="text-gray-300 text-xs">{slide.flagText}</span>
+                </div>
+
+                <div className="mt-4">
+                  <a
+                    href={slide.buttonLink}
+                    className="bg-amber-400 hover:bg-amber-500 text-black px-5 py-2 rounded-md font-medium inline-block transition-colors text-sm"
+                  >
+                    {slide.buttonText}
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Vista escritorio: layout grid con altura completa */}
+            <div className="hidden md:grid md:grid-cols-2 h-full w-full">
+              {/* Imagen en escritorio */}
+              <div className="flex items-center justify-center p-10 h-full">
+                <div className="w-full max-w-md rounded-lg overflow-hidden">
+                  <img src={slide.image} alt={slide.title} className="w-full h-auto object-cover" />
+                </div>
+              </div>
+
+              {/* Contenido en escritorio */}
+              <div className="flex flex-col justify-center p-10 text-white h-full">
+                <h1 className="text-5xl font-bold text-white">{slide.title}</h1>
+                <h2 className="text-4xl font-bold text-amber-400 mt-2">{slide.subtitle}</h2>
+                <p className="text-xl mt-6 text-white/90">{slide.description}</p>
+
+                <div className="flex items-center mt-4">
+                  <span className="text-2xl mr-2">{slide.flag}</span>
+                  <span className="text-gray-300">{slide.flagText}</span>
+                </div>
+
+                <div className="mt-8">
+                  <a
+                    href={slide.buttonLink}
+                    className="bg-amber-400 hover:bg-amber-500 text-black px-8 py-4 rounded-md font-medium inline-block transition-colors"
+                  >
+                    {slide.buttonText}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Controles de navegación */}
+      {slideData.length > 1 && (
+        <>
+          <button
+            onClick={prevSlide}
+            className="absolute left-2 md:left-4 top-1/3 md:top-1/2 -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 text-white p-2 md:p-3 rounded-full transition-colors"
+            aria-label="Previous slide"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4 md:h-6 md:w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+
+          <button
+            onClick={nextSlide}
+            className="absolute right-2 md:right-4 top-1/3 md:top-1/2 -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 text-white p-2 md:p-3 rounded-full transition-colors"
+            aria-label="Next slide"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4 md:h-6 md:w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </>
+      )}
+
+      {/* Indicadores de slides - ahora posicionados absolutamente en la parte inferior */}
+      {slideData.length > 1 && (
+        <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 md:gap-3 z-20 py-2 bg-black/50">
+          {slideData.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all ${
+                index === currentSlide ? 'bg-amber-400 w-4 md:w-6' : 'bg-gray-400'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default HeroSlider
