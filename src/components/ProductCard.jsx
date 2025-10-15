@@ -1,6 +1,14 @@
 import React from 'react'
 
-const ProductCard = ({ image, series, description, price, linkText = 'Ver más' }) => {
+const ProductCard = ({
+  image,
+  series,
+  description,
+  price,
+  linkText = 'Ver más',
+  product,
+  onViewDetails,
+}) => {
   return (
     <div className="flex flex-col overflow-hidden rounded-lg">
       {/* Imagen del producto con fondo blanco */}
@@ -15,12 +23,12 @@ const ProductCard = ({ image, series, description, price, linkText = 'Ver más' 
 
         <div className="mt-auto flex justify-between items-center">
           <span className="text-amber-400 text-2xl font-bold">${price}</span>
-          <a
-            href={`/productos/${series.toLowerCase()}`}
-            className="text-amber-400 hover:text-amber-300 transition-colors"
+          <button
+            onClick={() => onViewDetails(product)}
+            className="text-amber-400 hover:text-amber-300 transition-colors cursor-pointer"
           >
             {linkText}
-          </a>
+          </button>
         </div>
       </div>
     </div>
