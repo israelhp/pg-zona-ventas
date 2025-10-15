@@ -2,7 +2,10 @@ import React from 'react'
 
 const AboutSection = () => {
   return (
-    <section className="bg-zinc-900 text-white min-h-screen flex items-center py-8">
+    <section
+      id="nosotros"
+      className="bg-zinc-900 text-white min-h-screen flex items-center py-8 scroll-margin-top-16"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold mb-6">
@@ -17,7 +20,7 @@ const AboutSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Tarjeta de Precisión */}
-          <div className="bg-black border border-zinc-800 rounded-lg p-8 text-center">
+          <div className="bg-black border border-gray-800 rounded-lg p-8 text-center">
             <div className="flex justify-center mb-4">
               <svg className="w-16 h-16 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M14 7l-5 5 5 5V7z"></path>
@@ -33,7 +36,7 @@ const AboutSection = () => {
           </div>
 
           {/* Tarjeta de Calidad de Sonido */}
-          <div className="bg-black border border-zinc-800 rounded-lg p-8 text-center">
+          <div className="bg-black border border-gray-800 rounded-lg p-8 text-center">
             <div className="flex justify-center mb-4">
               <svg className="w-16 h-16 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"></path>
@@ -47,7 +50,7 @@ const AboutSection = () => {
           </div>
 
           {/* Tarjeta de Durabilidad */}
-          <div className="bg-black border border-zinc-800 rounded-lg p-8 text-center">
+          <div className="bg-black border border-gray-800 rounded-lg p-8 text-center">
             <div className="flex justify-center mb-4">
               <svg className="w-16 h-16 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"></path>

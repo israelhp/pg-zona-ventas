@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import ProductCard from './ProductCard'
+import ProductModal from './ProductModal'
 
 const ProductsSection = () => {
   const [activeCategory, setActiveCategory] = useState('all')
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState(null)
 
   const categories = [
     { id: 'all', name: 'Todos' },
@@ -20,6 +23,8 @@ const ProductsSection = () => {
       price: '499',
       image: '/images/products/apolo.jpg',
       category: 'speakers',
+      longDescription:
+        'El altavoz APOLO Series de VERSTÄRKER ofrece una reproducción de sonido excepcionalmente clara y detallada. Su driver de rango medio de 6.5" proporciona voces naturales y una respuesta de graves contundente en un diseño compacto y elegante.',
     },
     {
       id: 2,
@@ -28,6 +33,8 @@ const ProductsSection = () => {
       price: '249',
       image: '/images/products/ares.jpg',
       category: 'amplifiers',
+      longDescription:
+        'El amplificador ARES Series combina potencia y refinamiento en un diseño compacto. Con una arquitectura de circuito discreta y componentes de alta calidad, ofrece un sonido limpio y dinámico que satisfará a los audiófilos más exigentes.',
     },
     {
       id: 3,
@@ -36,6 +43,8 @@ const ProductsSection = () => {
       price: '799',
       image: '/images/products/zeus.jpg',
       category: 'amplifiers',
+      longDescription:
+        'El sistema de componentes ZEUS Series representa la cumbre de la ingeniería acústica alemana. Su crossover de precisión y drivers perfectamente emparejados ofrecen una imagen estéreo impresionante y una respuesta tonal equilibrada.',
     },
     {
       id: 4,
@@ -44,6 +53,8 @@ const ProductsSection = () => {
       price: '999',
       image: '/images/products/hades.jpg',
       category: 'subwoofers',
+      longDescription:
+        'El subwoofer HADES Series está diseñado para reproducir las frecuencias más bajas con autoridad y precisión. Su driver de 12" con suspensión de alta excursión y caja sintonizada con precisión proporciona graves profundos y articulados sin distorsión.',
     },
   ]
 
@@ -53,8 +64,19 @@ const ProductsSection = () => {
       ? products
       : products.filter(product => product.category === activeCategory)
 
+  // Función para abrir el modal con el producto seleccionado
+  const handleViewDetails = product => {
+    setSelectedProduct(product)
+    setModalOpen(true)
+  }
+
+  // Función para cerrar el modal
+  const handleCloseModal = () => {
+    setModalOpen(false)
+  }
+
   return (
-    <section className="bg-black text-white min-h-screen py-16">
+    <section id="productos" className="bg-black text-white min-h-screen py-16 scroll-margin-top-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold mb-2">
@@ -91,10 +113,15 @@ const ProductsSection = () => {
               series={product.series}
               description={product.description}
               price={product.price}
+              product={product}
+              onViewDetails={handleViewDetails}
             />
           ))}
         </div>
       </div>
+
+      {/* Modal de detalles del producto */}
+      <ProductModal isOpen={modalOpen} onClose={handleCloseModal} product={selectedProduct} />
     </section>
   )
 }

@@ -56,7 +56,10 @@ const ContactSection = () => {
   }
 
   return (
-    <section className="bg-zinc-900 text-white min-h-screen py-16 flex items-center">
+    <section
+      id="contacto"
+      className="bg-zinc-900 text-white min-h-screen py-16 flex items-center scroll-margin-top-16"
+    >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 w-full">
         <div className="text-center mb-10">
           <h2 className="text-4xl font-bold mb-3">Contáctanos</h2>
